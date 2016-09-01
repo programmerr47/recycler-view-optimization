@@ -21,7 +21,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':vksdk_library')
 
     compile 'com.android.support:appcompat-v7:24.1.1'
 
