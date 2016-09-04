@@ -15,9 +15,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         RecyclerView gameListView = (RecyclerView) findViewById(R.id.list);
-        List<Game> games = new CachedGameTask(new FixedGameTask()).getGameList();
-        GameListAdapter adapter = new GameListAdapter(games);
         gameListView.setLayoutManager(new LinearLayoutManager(this));
-        gameListView.setAdapter(adapter);
+        gameListView.setAdapter(new GameListAdapter(GameList.get()));
     }
 }

@@ -7,9 +7,8 @@ import java.util.List;
  * @author Michael Spitsin
  * @since 2016-09-02
  */
-public class FixedGameTask implements GameTask {
-    @Override
-    public List<Game> getGameList() {
+public class GameList {
+    public static List<Game> get() {
         List<Game> result = new ArrayList<>();
         result.add(new Game("Age of Empires 2", "One of the best strategies", R.drawable.ic_age_of_empires_2));
         result.add(new Game("Assassin's Creed", "Crusade times...mmm...briliant", R.drawable.ic_assassins_creed));
