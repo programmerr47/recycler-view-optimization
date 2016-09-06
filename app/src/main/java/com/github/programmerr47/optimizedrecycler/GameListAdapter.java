@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 /**
@@ -30,7 +32,9 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
         Game game = games.get(position);
-        holder.icon.setImageResource(game.getIconId());
+        Picasso.with(holder.icon.getContext())
+                .load(game.getIconId())
+                .into(holder.icon);
         holder.title.setText(game.getTitle());
         holder.description.setText(game.getDescription());
     }
