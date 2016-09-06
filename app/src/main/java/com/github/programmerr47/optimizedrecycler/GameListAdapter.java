@@ -11,6 +11,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 /**
  * @author Michael Spitsin
  * @since 2016-09-04
@@ -24,19 +27,16 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
 
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View itemView = inflater.inflate(R.layout.item_game, null, false);
+        ViewGroup.LayoutParams params = new RecyclerView.LayoutParams(MATCH_PARENT, WRAP_CONTENT);
+        GameItemView itemView = new GameItemView(parent.getContext());
+        itemView.setLayoutParams(params);
         return new GameViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
         Game game = games.get(position);
-        Picasso.with(holder.icon.getContext())
-                .load(game.getIconId())
-                .into(holder.icon);
-        holder.title.setText(game.getTitle());
-        holder.description.setText(game.getDescription());
+        holder.gameItemView.setGame(game);
     }
 
     @Override
@@ -45,17 +45,11 @@ public class GameListAdapter extends RecyclerView.Adapter<GameListAdapter.GameVi
     }
 
     final class GameViewHolder extends RecyclerView.ViewHolder {
-        public final ImageView icon = bind(R.id.icon);
-        public final TextView title = bind(R.id.title);
-        public final TextView description = bind(R.id.description);
+        public final GameItemView gameItemView;
 
-        public GameViewHolder(View itemView) {
+        public GameViewHolder(GameItemView itemView) {
             super(itemView);
-        }
-
-        @SuppressWarnings("unchecked")
-        private <T> T bind(int resId) {
-            return (T) itemView.findViewById(resId);
+            this.gameItemView = itemView;
         }
     }
 }
