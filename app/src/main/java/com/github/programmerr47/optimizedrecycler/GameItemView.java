@@ -120,7 +120,7 @@ public class GameItemView extends View implements Target {
     public void setGame(Game game) {
         iconDrawable = new ColorDrawable(0x00000000);
         iconDrawable.setBounds(iconMargin, iconMargin, iconMargin + iconSize, iconMargin + iconSize);
-        Picasso.with(getContext()).load(game.getIconId()).into(this);
+        Picasso.with(getContext()).load(game.getIconId()).resize(iconSize, iconSize).into(this);
 
         int textXOffset = 2 * iconMargin + iconSize;
         CharSequence truncatedTitle = TextUtils.ellipsize(game.getTitle(), titlePaint, SCREEN_SIZE.x - textXOffset, TextUtils.TruncateAt.END);
