@@ -2,12 +2,15 @@ package com.github.programmerr47.optimizedrecycler;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author Michael Spitsin
  * @since 2016-09-02
  */
 public class GameList {
+    private static final Random r = new Random();
+
     public static List<Game> get() {
         List<Game> result = new ArrayList<>();
         result.add(new Game("Age of Empires 2", "One of the best strategies", R.drawable.ic_age_of_empires_2));
@@ -58,5 +61,24 @@ public class GameList {
         result.add(new Game("The Witcher 2", "Failure of the year", R.drawable.ic_witcher_2));
         result.add(new Game("The Witcher 3", "Best RPG of last 10 years", R.drawable.ic_witcher_3));
         return result;
+    }
+
+    public static List<Game> increaseCopyPastingText(List<Game> games) {
+        List<Game> result = new ArrayList<>();
+        for (Game game : games) {
+            result.add(new Game(game.getTitle(), breedString(game.getDescription()), game.getIconId()));
+        }
+
+        return result;
+    }
+
+    private static String breedString(String origin) {
+        int count = r.nextInt(100) + 20;
+        StringBuilder resultBuilder = new StringBuilder();
+        for (int i = 0; i < count; i++) {
+            resultBuilder.append(origin);
+        }
+
+        return resultBuilder.toString();
     }
 }

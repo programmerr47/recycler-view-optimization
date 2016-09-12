@@ -16,6 +16,6 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView gameListView = (RecyclerView) findViewById(R.id.list);
         gameListView.setLayoutManager(new LinearLayoutManager(this));
-        gameListView.setAdapter(new GameListAdapter(GameList.get()));
+        gameListView.setAdapter(new GameListAdapter(GameList.increaseCopyPastingText(GameList.get())));
     }
 }
