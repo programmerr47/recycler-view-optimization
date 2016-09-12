@@ -30,6 +30,8 @@ import static com.github.programmerr47.optimizedrecycler.CustomApplication.SCREE
  * @since 2016-09-06
  */
 public class GameItemView extends View implements Target {
+    private static final Drawable LOADING_PLACEHOLDER = new ColorDrawable(0x00000000);
+
     private static TextPaint titlePaint;
     private static TextPaint descriptionPaint;
 
@@ -40,6 +42,13 @@ public class GameItemView extends View implements Target {
     private final int iconSize = (int) dp(56);
     private final int iconMargin = (int) dp(8);
     private final int verticalPadding = (int) dp(4);
+
+    {
+        LOADING_PLACEHOLDER.setBounds(iconMargin, iconMargin, iconMargin + iconSize, iconMargin + iconSize);
+
+        int textXOffset = 2 * iconMargin + iconSize;
+        LayoutCache.INSTANCE.changeWidth(SCREEN_SIZE.x - textXOffset);
+    }
 
     public GameItemView(Context context) {
         super(context);
@@ -119,14 +128,10 @@ public class GameItemView extends View implements Target {
     public void onPrepareLoad(Drawable placeHolderDrawable) {}
 
     public void setGame(Game game) {
-        iconDrawable = new ColorDrawable(0x00000000);
-        iconDrawable.setBounds(iconMargin, iconMargin, iconMargin + iconSize, iconMargin + iconSize);
+        iconDrawable = LOADING_PLACEHOLDER;
         Picasso.with(getContext()).load(game.getIconId()).resize(iconSize, iconSize).into(this);
 
-        int textXOffset = 2 * iconMargin + iconSize;
-        LayoutCache.INSTANCE.changeWidth(SCREEN_SIZE.x - textXOffset);
-        CharSequence truncatedTitle = TextUtils.ellipsize(game.getTitle(), titlePaint, SCREEN_SIZE.x - textXOffset, TextUtils.TruncateAt.END);
-        titleLayout = LayoutCache.INSTANCE.titleLayoutFor(truncatedTitle);
+        titleLayout = LayoutCache.INSTANCE.titleLayoutFor(game.getTitle());
         descriptionLayout = LayoutCache.INSTANCE.descriptionLayoutFor(game.getDescription());
 
         requestLayout();
@@ -162,7 +167,8 @@ public class GameItemView extends View implements Target {
         private final LruCache<CharSequence, StaticLayout> titleCache = new LruCache<CharSequence, StaticLayout>(100) {
             @Override
             protected StaticLayout create(CharSequence key) {
-                return new StaticLayout(key, titlePaint, width, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
+                CharSequence truncatedTitle = TextUtils.ellipsize(key, titlePaint, width, TextUtils.TruncateAt.END);
+                return new StaticLayout(truncatedTitle, titlePaint, width, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
             }
         };
         private final LruCache<CharSequence, StaticLayout> descriptionCache = new LruCache<CharSequence, StaticLayout>(100) {
