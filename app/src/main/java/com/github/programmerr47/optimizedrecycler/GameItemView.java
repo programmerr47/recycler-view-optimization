@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
+import android.text.DynamicLayout;
 import android.text.Layout;
 import android.text.StaticLayout;
 import android.text.TextPaint;
@@ -30,8 +31,8 @@ import static com.github.programmerr47.optimizedrecycler.CustomApplication.SCREE
  */
 public class GameItemView extends View implements Target {
     private Drawable iconDrawable;
-    private StaticLayout titleLayout;
-    private StaticLayout descriptionLayout;
+    private DynamicLayout titleLayout;
+    private DynamicLayout descriptionLayout;
 
     private TextPaint titlePaint;
     private TextPaint descriptionPaint;
@@ -124,8 +125,8 @@ public class GameItemView extends View implements Target {
 
         int textXOffset = 2 * iconMargin + iconSize;
         CharSequence truncatedTitle = TextUtils.ellipsize(game.getTitle(), titlePaint, SCREEN_SIZE.x - textXOffset, TextUtils.TruncateAt.END);
-        titleLayout = new StaticLayout(truncatedTitle, titlePaint, SCREEN_SIZE.x - textXOffset, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
-        descriptionLayout = new StaticLayout(game.getDescription(), descriptionPaint, SCREEN_SIZE.x - textXOffset, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
+        titleLayout = new DynamicLayout(truncatedTitle, titlePaint, SCREEN_SIZE.x - textXOffset, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
+        descriptionLayout = new DynamicLayout(game.getDescription(), descriptionPaint, SCREEN_SIZE.x - textXOffset, Layout.Alignment.ALIGN_NORMAL, 1, 1, true);
 
         requestLayout();
         invalidate();
